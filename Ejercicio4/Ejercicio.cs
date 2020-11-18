@@ -9,15 +9,14 @@ namespace Ejercicio4
 {
     class Ejercicio
     {
-        static Caballo[] caballos = new Caballo[5]; // Creo el array de 5 caballos
-        static int meta = 400; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
+        static readonly int meta = 400; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
 
         static bool flag = false; // Creo y declaro el flag
         static readonly object l = new object(); // Creo el objeto del lock, porque los hilos están usando recursos iguales
 
 
         // Aquí hago la función que van a realizar los hilos de los caballos
-        static void accionesCaballo(Caballo caballo)
+        static void accionesCaballo(object caballo)
         {
             lock (l)
             {
@@ -41,8 +40,12 @@ namespace Ejercicio4
             }
         }
 
+
         static void Main(string[] args)
         {
+            Caballo[] caballos = new Caballo[5]; // Creo el array de 5 caballos
+            Thread[] hilos = new Thread[5];
+
             try
             {
                 Console.WriteLine("Por qué caballo apuestas?");
@@ -51,7 +54,8 @@ namespace Ejercicio4
                 for (int i = 0; i < caballos.Length; i++)
                 {
                     caballos[i] = new Caballo();
-
+                    hilos[i] = new Thread(accionesCaballo);
+                    hilos[i].Start(caballos[i]);
                 }
 
             }
