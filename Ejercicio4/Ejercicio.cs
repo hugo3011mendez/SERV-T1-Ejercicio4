@@ -10,6 +10,7 @@ namespace Ejercicio4
     class Ejercicio
     {
         static readonly int meta = 400; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
+        static Caballo[] caballos = new Caballo[5]; // Creo el array de 5 caballos
 
         static bool flag = false; // Creo y declaro el flag
         static readonly object l = new object(); // Creo el objeto del lock, porque los hilos están usando recursos iguales
@@ -31,6 +32,16 @@ namespace Ejercicio4
                         int dormir = generador.Next(100, 5000);
 
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
+
+                        // Así muestro qué caballo lleva recorridos tantos metros
+                        for (int i = 0; i < caballos.Length; i++)
+                        {
+                            if (caballo == caballos[i])
+                            {
+                                Console.WriteLine("Caballo " + (i+1) + " : " + caballo.Posicion + "m recorridos");
+                            }
+                        }
+
                         Thread.Sleep(dormir);
 
                         if (caballo.Posicion >= meta)
@@ -45,13 +56,13 @@ namespace Ejercicio4
 
         static void Main(string[] args)
         {
-            Caballo[] caballos = new Caballo[5]; // Creo el array de 5 caballos
             Thread[] hilos = new Thread[5];
 
             try
             {
                 Console.WriteLine("Por qué caballo apuestas?");
                 int apuesta = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
 
                 for (int i = 0; i < caballos.Length; i++)
                 {
@@ -68,7 +79,7 @@ namespace Ejercicio4
                 {
                     if (caballos[j].Posicion >= meta)
                     {
-                        Console.WriteLine("El caballo Nº " + j+1 + " gana!");
+                        Console.WriteLine("El caballo Nº " + (j+1) + " gana!");
                     }
                 }
                 Console.ReadLine();

@@ -14,7 +14,7 @@ namespace Ejercicio4
         {
             Random generador = new Random();
             
-            this.Posicion += generador.Next(1, 101);
+            this.Posicion += generador.Next(20, 101);
         }
 
         public Caballo()
