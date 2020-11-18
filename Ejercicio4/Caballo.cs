@@ -13,7 +13,8 @@ namespace Ejercicio4
         public void correr()
         {
             Random generador = new Random();
-            
+
+            // Pongo 20 de distancia mínima porque los caballos suelen correr más que una persona, que recorriera 5m en un máximo de 5 segundos es poco creíble
             this.Posicion += generador.Next(20, 101);
         }
 

@@ -29,11 +29,11 @@ namespace Ejercicio4
                     {
 
                         Random generador = new Random();
-                        int dormir = generador.Next(100, 5000);
+                        int dormir = generador.Next(500, 5000);
 
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
 
-                        // Así muestro qué caballo lleva recorridos tantos metros
+                        // Así muestro qué caballo lleva recorridos cuántos metros
                         for (int i = 0; i < caballos.Length; i++)
                         {
                             if (caballo == caballos[i])
@@ -42,8 +42,9 @@ namespace Ejercicio4
                             }
                         }
 
-                        Thread.Sleep(dormir);
+                        Thread.Sleep(dormir); // Mando a dormir al hilo
 
+                        // Aquí compruebo si el caballo ha llegado a la meta
                         if (caballo.Posicion >= meta)
                         {
                             flag = true;
@@ -57,44 +58,59 @@ namespace Ejercicio4
         static void Main(string[] args)
         {
             Thread[] hilos = new Thread[5];
+            bool repetir = true;
 
-            try
+            while (repetir)
             {
-                Console.WriteLine("Por qué caballo apuestas?");
-                int apuesta = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine();
-
-                for (int i = 0; i < caballos.Length; i++)
+                try
                 {
-                    caballos[i] = new Caballo();
-                    hilos[i] = new Thread(accionesCaballo);
-                    hilos[i].Start(caballos[i]);
-                }
+                    Console.WriteLine("Por qué caballo apuestas?");
+                    int apuesta = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
 
-                // Uso el Join para que el hilo Main se encuentre a la espera de que uno de los hilos acabe, y como acaban todos a la vez no importa el hilo que se debe poner en el Join
-                hilos[0].Join();
-
-                // Así muestro el caballo ganador
-                for (int j = 0; j < caballos.Length; j++)
-                {
-                    if (caballos[j].Posicion >= meta)
+                    for (int i = 0; i < caballos.Length; i++)
                     {
-                        Console.WriteLine("El caballo Nº " + (j+1) + " gana!");
+                        caballos[i] = new Caballo();
+                        hilos[i] = new Thread(accionesCaballo);
+                        hilos[i].Start(caballos[i]);
+                    }
+
+                    // Uso el Join para que el hilo Main se encuentre a la espera de que uno de los hilos acabe, y como acaban todos a la vez no importa el hilo que se debe poner en el Join
+                    hilos[0].Join();
+
+                    // Así muestro el caballo ganador
+                    for (int j = 0; j < caballos.Length; j++)
+                    {
+                        if (caballos[j].Posicion >= meta)
+                        {
+                            Console.WriteLine("El caballo Nº " + (j+1) + " gana!");
+                        }
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("Quieres repetir? S/N");
+
+                    if (Console.ReadLine().ToUpper() != "S")
+                    {
+                        repetir = false;
+                        Console.WriteLine("Pulsa Enter para salir : ");
+                        Console.ReadLine();
                     }
                 }
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine();
+                catch (Exception ex)
+                {
+                    Console.WriteLine();
 
-                if (ex is FormatException)
-                {
-                    Console.WriteLine("Tienes que escribir un número! Los caballos se diferencian por sus números");
-                }
-                else if (ex is OverflowException)
-                {
-                    Console.WriteLine("Has escrito un dato demasiado grande! Los caballos sólo van del 1 al 5...");
+                    if (ex is FormatException)
+                    {
+                        Console.WriteLine("Has escrito un tipo de dato que no vale, repite...");
+                        repetir = true;
+                    }
+                    else if (ex is OverflowException)
+                    {
+                        Console.WriteLine("Has escrito un dato demasiado grande!");
+                        repetir = true;
+                    }
                 }
             }
         }
