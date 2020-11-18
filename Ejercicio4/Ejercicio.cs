@@ -10,7 +10,7 @@ namespace Ejercicio4
     class Ejercicio
     {
         static readonly int meta = 400; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
-        static Caballo[] caballos = new Caballo[5]; // Creo el array de 5 caballos
+        static Caballo[] caballos; // Creo el array de 5 caballos
 
         static bool flag = false; // Creo y declaro el flag
         static readonly object l = new object(); // Creo el objeto del lock, porque los hilos están usando recursos iguales
@@ -57,11 +57,15 @@ namespace Ejercicio4
 
         static void Main(string[] args)
         {
-            Thread[] hilos = new Thread[5];
             bool repetir = true;
 
             while (repetir)
             {
+                // Actualización de las variables al repetirse el programa
+                caballos = new Caballo[5];
+                Thread[] hilos = new Thread[5];
+                flag = false;
+
                 try
                 {
                     Console.WriteLine("Por qué caballo apuestas?");
@@ -84,13 +88,21 @@ namespace Ejercicio4
                         if (caballos[j].Posicion >= meta)
                         {
                             Console.WriteLine("El caballo Nº " + (j+1) + " gana!");
+                            if (apuesta == (j+1))
+                            {
+                                Console.WriteLine("HAS GANADO!!!");
+                            }
                         }
                     }
                     Console.WriteLine();
                     Console.WriteLine();
                     Console.WriteLine("Quieres repetir? S/N");
 
-                    if (Console.ReadLine().ToUpper() != "S")
+                    if (Console.ReadLine().ToUpper() != "N")
+                    {
+                        repetir = true;
+                    }
+                    else
                     {
                         repetir = false;
                         Console.WriteLine("Pulsa Enter para salir : ");
