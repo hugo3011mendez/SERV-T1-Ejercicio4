@@ -16,8 +16,10 @@ namespace Ejercicio4
 
 
         // Aquí hago la función que van a realizar los hilos de los caballos
-        static void accionesCaballo(object caballo)
+        static void accionesCaballo(object param)
         {
+            Caballo caballo = (Caballo)param;
+
             lock (l)
             {
                 if (!flag)
