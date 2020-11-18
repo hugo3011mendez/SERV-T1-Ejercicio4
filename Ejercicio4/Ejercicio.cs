@@ -20,13 +20,13 @@ namespace Ejercicio4
         {
             Caballo caballo = (Caballo)param;
 
-            lock (l)
+            while (!flag)
             {
-                if (!flag)
+                lock (l)
                 {
-
-                    while (!flag)
+                    if (!flag)
                     {
+
                         Random generador = new Random();
                         int dormir = generador.Next(100, 5000);
 
@@ -37,8 +37,8 @@ namespace Ejercicio4
                         {
                             flag = true;
                         }
-                    }
-                } 
+                    } 
+                }
             }
         }
 
@@ -60,6 +60,18 @@ namespace Ejercicio4
                     hilos[i].Start(caballos[i]);
                 }
 
+                // Uso el Join para que el hilo Main se encuentre a la espera de que uno de los hilos acabe, y como acaban todos a la vez no importa el hilo que se debe poner en el Join
+                hilos[0].Join();
+
+                // Así muestro el caballo ganador
+                for (int j = 0; j < caballos.Length; j++)
+                {
+                    if (caballos[j].Posicion >= meta)
+                    {
+                        Console.WriteLine("El caballo Nº " + j+1 + " gana!");
+                    }
+                }
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
