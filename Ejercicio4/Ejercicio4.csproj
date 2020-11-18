@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caballo.cs" />
     <Compile Include="Ejercicio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
