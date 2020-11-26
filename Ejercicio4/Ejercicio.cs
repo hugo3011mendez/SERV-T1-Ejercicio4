@@ -9,7 +9,7 @@ namespace Ejercicio4
 {
     class Ejercicio
     {
-        static readonly int meta = 400; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
+        static readonly int meta = 100; // Creo y declaro la variable meta para determinar a cuántos metros está la meta
         static Caballo[] caballos; // Creo el array de 5 caballos
 
         static bool flag = false; // Creo y declaro el flag
@@ -28,7 +28,7 @@ namespace Ejercicio4
                     {
 
                         Random generador = new Random();
-                        int dormir = generador.Next(500, 5001);
+                        int dormir = generador.Next(300, 2001);
 
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
 
