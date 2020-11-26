@@ -28,7 +28,7 @@ namespace Ejercicio4
                     {
 
                         Random generador = new Random();
-                        int dormir = generador.Next(300, 2001);
+                        int dormir = generador.Next(300, 1501);
 
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
 
@@ -37,10 +37,9 @@ namespace Ejercicio4
                         {
                             if (caballo == caballos[i])
                             {
-                                Console.SetCursorPosition(1, i+4);
-                                int progreso = Convert.ToInt32(caballo.Posicion % 5);
+                                Console.SetCursorPosition(0, i+4);
 
-                                for (int j = 0; j < progreso; j++)
+                                for (int j = 0; j < caballo.Posicion; j++)
                                 {
                                     Console.Write("*");
                                 }
@@ -67,6 +66,17 @@ namespace Ejercicio4
 
             while (repetir)
             {
+                Console.Clear(); // Limpio la pantalla cada vez que se repite para que las posiciones donde se muestra todo sigan funcionando
+
+                // Escribo la línea de meta
+                for (int i = 4; i <= 9; i++)
+                {
+                    Console.SetCursorPosition(101, i);
+                    Console.Write("| Caballo" + (i-3));
+                }
+
+                Console.SetCursorPosition(0, 1); // Devuelvo el cursor a su posición original
+
                 // Actualización de las variables al repetirse el programa
                 caballos = new Caballo[5];
                 Thread[] hilos = new Thread[5];
