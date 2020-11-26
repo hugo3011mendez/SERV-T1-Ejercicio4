@@ -20,16 +20,15 @@ namespace Ejercicio4
         static void accionesCaballo(object param)
         {
             Caballo caballo = (Caballo)param;
+            Random generador = new Random();
+            int dormir = generador.Next(300, 1001);
+
             while (!flag)
             {
                 lock (l)
                 {
                     if (!flag)
                     {
-
-                        Random generador = new Random();
-                        int dormir = generador.Next(300, 1001);
-
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
 
                         // Así muestro qué caballo lleva recorridos cuántos metros
@@ -47,7 +46,6 @@ namespace Ejercicio4
                             }
                         }
 
-                        Thread.Sleep(dormir); // Mando a dormir al hilo
 
                         // Aquí compruebo si el caballo ha llegado a la meta
                         if (caballo.Posicion >= meta)
@@ -56,6 +54,8 @@ namespace Ejercicio4
                         }
                     } 
                 }
+
+                Thread.Sleep(dormir); // Mando a dormir al hilo
             }
         }
 
@@ -73,7 +73,7 @@ namespace Ejercicio4
                 // Escribo la línea de meta
                 for (int i = 4; i < 9; i++)
                 {
-                    Console.SetCursorPosition(101, i);
+                    Console.SetCursorPosition(100, i);
                     Console.Write("| Caballo " + (i-3));
                 }
 
