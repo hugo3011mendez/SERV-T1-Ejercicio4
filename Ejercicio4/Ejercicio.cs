@@ -14,21 +14,24 @@ namespace Ejercicio4
 
         static bool flag = false; // Creo y declaro el flag
         static readonly object l = new object(); // Creo el objeto del lock, porque los hilos están usando recursos iguales
+        static Random generador = new Random();
 
 
         // Aquí hago la función que van a realizar los hilos de los caballos
         static void accionesCaballo(object param)
         {
             Caballo caballo = (Caballo)param;
-            Random generador = new Random();
-            int dormir = generador.Next(300, 1001);
+            int dormir = 0;
 
             while (!flag)
             {
+                dormir = generador.Next(300, 1001);
+
                 lock (l)
                 {
                     if (!flag)
                     {
+
                         caballo.correr(); // Llamo a la función correr para ver cuánta distancia recorre el caballo
 
                         // Así muestro qué caballo lleva recorridos cuántos metros
@@ -52,6 +55,7 @@ namespace Ejercicio4
                         {
                             flag = true;
                         }
+
                     } 
                 }
 
@@ -73,7 +77,7 @@ namespace Ejercicio4
                 // Escribo la línea de meta
                 for (int i = 4; i < 9; i++)
                 {
-                    Console.SetCursorPosition(100, i);
+                    Console.SetCursorPosition(99, i);
                     Console.Write("| Caballo " + (i-3));
                 }
 
